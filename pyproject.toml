@@ -2,11 +2,13 @@
 name = "arms-lab"
 version = "0.1.0"
 description = "Bimanual SO-101 simulation environment using Genesis and ROS 2"
+readme = "README.md"
 requires-python = ">=3.12,<3.13"
 dependencies = [
   "genesis-world==1.3.1",
-  "numpy>=2.0,<3",
+  "numpy>=1.26.4,<3",
   "pyyaml>=6.0,<7",
+  "torch>=2.5,<3",
 ]
 
 [dependency-groups]
@@ -24,6 +26,14 @@ build-backend = "hatchling.build"
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/so101_sim"]
+
+[[tool.uv.index]]
+name = "pytorch-cpu"
+url = "https://download.pytorch.org/whl/cpu"
+explicit = true
+
+[tool.uv.sources]
+torch = { index = "pytorch-cpu" }
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
