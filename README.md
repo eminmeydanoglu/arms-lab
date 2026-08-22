@@ -6,7 +6,7 @@ The frozen design specification is in [`nihai.md`](./nihai.md).
 
 ## Run
 
-Host requirement: Docker Engine with Docker Compose.
+Host requirement: Docker Engine with Docker Compose v2.
 
 ```bash
 ./run.sh
@@ -17,19 +17,26 @@ Optional modes:
 ```bash
 ./run.sh --headless
 ./run.sh --cpu
-./run.sh --gpu
 ./run.sh --reset-build
 ```
 
+The initial portable baseline is CPU-only. A GPU profile should be added only after CUDA, PyTorch and Genesis versions are pinned and tested together.
+
 The container owns ROS 2 Jazzy, Python 3.12, uv and Genesis dependencies so the host stays minimal.
 
-## First implementation milestones
+## Scaffold status
 
-1. Vendor and pin the official SO-101 URDF/STL assets under `third_party/so101/` with source commit and license.
-2. Build the Genesis world: 1.30 m × 0.75 m table, two SO-101 bases 0.40 m apart, primitive manipulation objects.
-3. Implement the SO-101 actuator layer: position targets, torque-speed limit, damping/friction and backlash.
-4. Implement the encoder layer: 12-bit quantization, configurable jitter and latency.
-5. Add the ROS 2 adapter with noisy joint states and separate ground-truth joint states.
-6. Add regression tests for FK, joint limits, servo response, encoder behavior and bimanual workspace.
+The repository currently provides the deployment/configuration skeleton, not the completed simulation. `./run.sh` builds the environment and runs a smoke check for dependencies, geometry and ROS contracts.
 
-Configuration starts in `config/default.yaml`. Simulation code should remain independent from the ROS adapter so alternative interfaces can be added later.
+Implemented scaffold pieces:
+
+- Ubuntu 24.04 + ROS 2 Jazzy container
+- Python 3.12 + uv project environment
+- Genesis 1.3.1 and CPU PyTorch dependency source
+- CycloneDDS middleware
+- canonical `config/default.yaml`
+- table/arm placement geometry helper
+- fixed ROS topic contracts for commands, noisy state and ground truth
+- initial configuration/geometry/contract tests
+
+The next implementation order is documented in [`FIRST_STEPS.md`](./FIRST_STEPS.md).

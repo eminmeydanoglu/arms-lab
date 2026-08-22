@@ -1,1 +1,4 @@
-"""arms-lab SO-101 simulation package."""
+"""SO-101 bimanual simulation package."""
+
+__all__ = ["__version__"]
+__version__ = "0.1.0"

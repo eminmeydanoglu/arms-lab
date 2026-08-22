@@ -5,10 +5,12 @@ services:
     image: arms-lab:local
     network_mode: host
     environment:
+      ARMS_LAB_CONFIG: ${ARMS_LAB_CONFIG:-config/default.yaml}
+      ARMS_LAB_DEVICE: ${ARMS_LAB_DEVICE:-cpu}
+      ARMS_LAB_HEADLESS: ${ARMS_LAB_HEADLESS:-0}
       DISPLAY: ${DISPLAY:-}
       QT_X11_NO_MITSHM: "1"
-      ARMS_LAB_HEADLESS: ${ARMS_LAB_HEADLESS:-}
-      ARMS_LAB_DEVICE: ${ARMS_LAB_DEVICE:-}
+      RMW_IMPLEMENTATION: rmw_cyclonedds_cpp
     volumes:
       - /tmp/.X11-unix:/tmp/.X11-unix:rw
     stdin_open: true
