@@ -1,0 +1,47 @@
+simulation:
+  physics_hz: 500
+  servo_hz: 100
+  random_seed: 42
+  device: auto
+  headless: false
+
+robot:
+  model: so101_follower
+  count: 2
+
+servo:
+  model: sts3215_7_4v
+  kp: 998.22
+  kv: 2.731
+  stall_torque_nm: 1.91
+  no_load_speed_rad_s: 5.45
+  damping: 0.60
+  friction_loss: 0.052
+  armature: 0.028
+  backlash_deg: 0.5
+
+encoder:
+  bits: 12
+  noise_sigma_counts: 0.5
+  latency_ms: 5
+  latency_jitter_ms: 1
+
+ros:
+  controller_hz: 50
+  joint_state_hz: 50
+  ground_truth_hz: 50
+
+scene:
+  table:
+    width_m: 1.30
+    depth_m: 0.75
+    thickness_m: 0.04
+    height_m: 0.75
+  arms:
+    separation_m: 0.40
+    rear_offset_m: 0.12
+  bimanual_spawn_zone:
+    x_min_m: -0.075
+    x_max_m: 0.125
+    y_min_m: -0.120
+    y_max_m: 0.120
