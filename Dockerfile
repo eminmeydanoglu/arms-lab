@@ -7,9 +7,10 @@ ENV DEBIAN_FRONTEND=noninteractive \
 RUN apt-get update && apt-get install -y --no-install-recommends \
     curl ca-certificates gnupg2 locales software-properties-common \
     python3.12 python3.12-venv python3-pip \
+    && add-apt-repository universe \
     && locale-gen en_US.UTF-8 \
     && curl -sSL https://raw.githubusercontent.com/ros/rosdistro/master/ros.key \
-       -o /usr/share/keyrings/ros-archive-keyring.gpg \
+       | gpg --dearmor -o /usr/share/keyrings/ros-archive-keyring.gpg \
     && echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/ros-archive-keyring.gpg] http://packages.ros.org/ros2/ubuntu noble main" \
        > /etc/apt/sources.list.d/ros2.list \
     && apt-get update && apt-get install -y --no-install-recommends \
@@ -26,7 +27,9 @@ ENV PATH="/root/.local/bin:${PATH}"
 
 WORKDIR /opt/arms-lab
 COPY pyproject.toml ./
-RUN uv sync --no-dev
+RUN uv venv --python /usr/bin/python3.12 --system-site-packages /opt/arms-lab/.venv \
+    && uv sync --no-dev
+
 COPY . .
 RUN uv sync
 
